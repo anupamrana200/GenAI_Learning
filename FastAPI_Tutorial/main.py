@@ -36,7 +36,7 @@ class Patient(BaseModel):
 class PatientUpdate(BaseModel):
   name: Annotated[Optional[str], Field(default= None ,description="Name of the patient, Write the full name.")]
   city: Annotated[Optional[str], Field(default= None ,description="City, in which patient lives.")]
-  age: Annotated[int, Field(default= None ,gt=0, lt=120, description="Age of the patient in yrs.")]
+  age: Annotated[Optional[int], Field(default= None ,gt=0, lt=120, description="Age of the patient in yrs.")]
   gender: Annotated[Optional[Literal['male','female','others']], Field(default= None ,description="Gender of the patient.")]
   height: Annotated[Optional[float], Field(default= None ,gt=0, description="Height of the patient in meters.")]
   weight: Annotated[Optional[float], Field(default= None ,gt=0, description="Weight of the patient in KGs.")]
@@ -87,7 +87,7 @@ def view_patient(patient_id: str = Path(description="The ID of the patient to re
 
 @app.get("/sort")
 def sort_patients(sort_by: str = Query(description="Sort the basis of height, weight, bmi or age"), order: str = Query("asc", description="Sort order: asc or desc")):
-  valid_fields = ["height", "weight", "bmi", "age"]
+  valid_fields = ["height", "weight", "age"]
 
   if sort_by not in valid_fields:
     raise HTTPException(status_code = 400, detail = f"Invalid sort_by entered. must be on of {valid_fields}")
