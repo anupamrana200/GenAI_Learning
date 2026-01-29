@@ -15,6 +15,7 @@ try:
     api = YouTubeTranscriptApi()
     transcript_list = api.fetch(video_id, languages=["en"])
     transcript = " ".join(item.text for item in transcript_list)
+    print(transcript_list)
 
 except TranscriptsDisabled:
     print("No caption available for this video")
